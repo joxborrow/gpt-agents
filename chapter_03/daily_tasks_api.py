@@ -4,22 +4,19 @@ from typing import List
 
 app = FastAPI()
 
-# Define a Pydantic model for a task
 class Task(BaseModel):
     id: int
-    description: str
+    title: str
     completed: bool
 
-# Mock data: List of tasks
-tasks = [
-    Task(id=1, description="Buy groceries", completed=False),
-    Task(id=2, description="Read a book", completed=True),
-    Task(id=3, description="Complete FastAPI project", completed=False),
-]
-
-@app.get("/tasks", response_model=List[Task])
-async def get_tasks():
+@app.get("/tasks/daily", response_model=List[Task], tags=["Tasks"])
+def get_daily_tasks():
     """
-    Retrieve a list of daily tasks.
+    Retrieve the list of daily tasks.
     """
+    tasks = [
+        Task(id=1, title="Check emails", completed=False),
+        Task(id=2, title="Team stand-up meeting", completed=True),
+        Task(id=3, title="Write project report", completed=False)
+    ]
     return tasks
